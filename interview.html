@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview - Interview</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Interview Section -->
+        <div id="interviewSection" class="interview-section">
+            <div class="interview-header">
+                <h1>AI Mock Interview</h1>
+                <div class="progress-info">
+                    <span id="questionCounter" class="question-counter">Question 1/5</span>
+                </div>
+            </div>
+
+            <!-- Mode Toggle -->
+            <div class="mode-toggle">
+                <button id="voiceToggleBtn" class="mode-btn active" title="Voice interaction mode">
+                    <span class="icon">🎤</span>
+                    Voice Mode
+                </button>
+                <button id="textToggleBtn" class="mode-btn" title="Text input mode">
+                    <span class="icon">⌨️</span>
+                    Text Mode
+                </button>
+            </div>
+
+            <!-- Question Display -->
+            <div class="question-container">
+                <div class="question-label">Current Question:</div>
+                <div id="questionDisplay" class="question-display">
+                    Loading question...
+                </div>
+            </div>
+
+            <!-- Voice Interaction Section -->
+            <div id="voiceSection" class="interaction-section">
+                <div class="voice-controls">
+                    <button id="startListeningBtn" class="btn btn-primary btn-voice">
+                        <span class="voice-icon">🎤</span>
+                        Start Listening
+                    </button>
+                    <button id="stopListeningBtn" class="btn btn-secondary btn-voice" disabled>
+                        <span class="voice-icon">⏹</span>
+                        Stop Listening
+                    </button>
+                </div>
+
+                <div id="listeningStatus" class="listening-status hidden">
+                    <div class="listening-indicator">
+                        <span class="animated-dots"></span>
+                        Listening...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text Input Section (Hidden by default) -->
+            <div id="textSection" class="interaction-section hidden">
+                <textarea id="answerInput" class="answer-textarea" placeholder="Type your answer here..."></textarea>
+            </div>
+
+            <!-- Answer Display -->
+            <div class="answer-container">
+                <div class="answer-label">Your Answer:</div>
+                <div id="answerDisplay" class="answer-display answer-text-box">
+                    <span class="placeholder">Your answer will appear here...</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button id="submitBtn" class="btn btn-primary" disabled>
+                    <span>✓</span>
+                    Submit Answer
+                </button>
+                <button id="clearBtn" class="btn btn-secondary">
+                    <span>⟲</span>
+                    Clear
+                </button>
+            </div>
+        </div>
+
+        <!-- Results Section (Hidden initially) -->
+        <div id="resultsSection" class="results-section hidden">
+            <div class="results-header">
+                <h2>Evaluation Results</h2>
+                <div class="question-label">Question: <span id="resultQuestion"></span></div>
+            </div>
+
+            <div class="results-table-container">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Score</th>
+                            <th>Progress</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Accuracy</td>
+                            <td><span id="resultAccuracy">--</span>%</td>
+                            <td><div class="progress-bar"><div class="progress-fill" id="accuracyBar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Clarity</td>
+                            <td><span id="resultClarity">--</span>%</td>
+                            <td><div class="progress-bar"><div class="progress-fill" id="clarityBar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Completeness</td>
+                            <td><span id="resultCompleteness">--</span>%</td>
+                            <td><div class="progress-bar"><div class="progress-fill" id="completenessBar"></div></div></td>
+                        </tr>
+                        <tr>
+                            <td>Confidence</td>
+                            <td><span id="resultConfidence">--</span>%</td>
+                            <td><div class="progress-bar"><div class="progress-fill" id="confidenceBar"></div></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="answer-review">
+                <h3>Your Answer:</h3>
+                <div id="reviewAnswer" class="answer-text-box"></div>
+            </div>
+
+            <div class="results-actions">
+                <button id="nextBtn" class="btn btn-primary">
+                    <span>→</span>
+                    Next Question
+                </button>
+            </div>
+        </div>
+
+        <!-- End of Interview Section (Hidden initially) -->
+        <div id="endSection" class="end-section hidden">
+            <div class="end-content">
+                <h2>Interview Complete!</h2>
+                <p>You have completed all interview questions.</p>
+                
+                <div class="summary-stats">
+                    <div class="stat-card">
+                        <span class="stat-label">Average Accuracy</span>
+                        <span class="stat-value" id="summaryAccuracy">--</span>%
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Average Clarity</span>
+                        <span class="stat-value" id="summaryClarity">--</span>%
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Average Completeness</span>
+                        <span class="stat-value" id="summaryCompleteness">--</span>%
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-label">Average Confidence</span>
+                        <span class="stat-value" id="summaryConfidence">--</span>%
+                    </div>
+                </div>
+
+                <div class="interview-history">
+                    <h3>Interview History</h3>
+                    <div id="historyTable" class="history-table"></div>
+                </div>
+
+                <div class="end-actions">
+                    <button id="restartBtn" class="btn btn-primary btn-lg">
+                        <span>🔄</span>
+                        Start New Interview
+                    </button>
+                    <button id="homeBtn" class="btn btn-secondary btn-lg">
+                        <span>🏠</span>
+                        Back to Home
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner hidden">
+        <div class="spinner"></div>
+        <p>Processing your answer...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
